@@ -1,103 +1,60 @@
-# TSDX User Guide
+# Introduction
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+React Project Starter Framework - Bootstrap a new React web applications without any hassle.<br/>
+Check out the complete documentation [HERE](https://github.com/nazmul53p/nextjs_setup/blob/main/README.md).<br/>
 
-> This TSDX setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
+Technologies used: <br/>
+[React.js](https://react.dev/learn) |
+[Next.js](https://nextjs.org/docs) |
+[TypeScript](https://www.typescriptlang.org/docs) |
+[Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started) |
+[RTK Query](https://redux-toolkit.js.org/rtk-query/overview) |
+[Tailwind](https://v2.tailwindcss.com/docs) |
+[Prettier](https://prettier.io/docs/en) |
+[ESLint](https://eslint.org/docs/latest/rules) |
+[React Hook Form](https://react-hook-form.com/get-started) |
+[DayJS](https://day.js.org/en) |
+[Yarn](https://yarnpkg.com) |
+[Docker](https://docs.docker.com) |
 
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+# Prerequisites
 
-## Commands
+1. Node.js version greater than or equals to 18.17 - it is recommended to use Node.js 20.10.0 LTS.
+2. Installed Node.js should be 64bit (x64) version.
+3. If you need older Node.js versions for other projects, please use [NVM](https://codedamn.com/news/nodejs/nvm-installation-setup-guide) to make changing versions easier.
+4. Docker should be installed in your machine. [Docker for Windows](https://docs.docker.com/desktop/install/windows-install) | [Docker for Linux](https://docs.docker.com/desktop/install/linux-install) | [Docker for Mac](https://docs.docker.com/desktop/install/mac-install)
+5. [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) should be installed and configured correctly.
+6. [Yarn](https://yarnpkg.com) should be installed. [Install Guide](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
+7. These VSCode extensions should be installed: [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) | [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) | [Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost)
 
-TSDX scaffolds your new library inside `/src`.
+# Installation
 
-To run TSDX, use:
+At first install the framework directly from NPM Package Manager
 
-```bash
-npm start # or yarn start
+```
+npx @nazmul53p/quick-setup
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+When prompted write your project name and port to display the application
 
-To do a one-off build, use `npm run build` or `yarn build`.
-
-To run tests, use `npm test` or `yarn test`.
-
-## Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+```
+Name: test_project
+Port: 3000
 ```
 
-### Rollup
+Open the project directory in your terminal
 
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
+```
+cd test_project
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+Open the application with your code editor. It is good to use VSCode.
 
-## Module Formats
+To run the application enter this command
 
-CJS, ESModules, and UMD module formats are supported.
+```
+yarn dev
+```
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Named Exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
+Your project is now ready! You can view the starting page at localhost:THE_PORT_YOU_GIVEN
+If the port you entered during setup is not free, it will open in the next port.

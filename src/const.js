@@ -1,4 +1,4 @@
-export const getDockerFile = (nodeVersion: string) => {
+export const getDockerFile = nodeVersion => {
   return `
     FROM node:${nodeVersion}
 
@@ -8,7 +8,7 @@ export const getDockerFile = (nodeVersion: string) => {
     `;
 };
 
-export const getDockerComposeFile = (projectName: string) => {
+export const getDockerComposeFile = projectName => {
   return `
     version: "3.9"
     services:
@@ -32,7 +32,7 @@ export const getDockerComposeFile = (projectName: string) => {
             driver: bridge
     `;
 };
-export const getEcosystemConfigJsFile = (projectName: string) => {
+export const getEcosystemConfigJsFile = projectName => {
   return `
     module.exports = {
         apps: [
@@ -57,7 +57,7 @@ export const getEcosystemConfigJsFile = (projectName: string) => {
     `;
 };
 
-export const getDeployShFile = (projectName: string) => {
+export const getDeployShFile = projectName => {
   return `
     git pull
     docker-compose down

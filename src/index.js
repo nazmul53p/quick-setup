@@ -6,7 +6,7 @@ import * as fs from 'node:fs/promises';
 
 import chalk from 'chalk';
 import dotenv from 'dotenv';
-import ora, { Ora as OriginalOra } from 'ora';
+import ora from 'ora';
 import path from 'path';
 import semver from 'semver';
 import shell from 'shelljs';
@@ -15,19 +15,12 @@ import {
   getDockerComposeFile,
   getDockerFile,
   getEcosystemConfigJsFile,
-} from './const';
+} from './const.js';
 
 dotenv.config();
 
-interface Ora extends Omit<OriginalOra, 'start' & 'succeed' & 'fail'> {
-  start(text?: string): this;
-  succeed(text?: string): this;
-  fail(text?: string): this;
-  stop(text?: string): this;
-}
-
 // create file and write data to file
-async function createAndWrite(filename: string, data: any) {
+async function createAndWrite(filename, data) {
   try {
     // Write the data to the file
     await fs.writeFile(filename, data, 'utf8');
@@ -37,7 +30,7 @@ async function createAndWrite(filename: string, data: any) {
 }
 
 // Function to clone a repository and rename the cloned directory
-async function renameDirectory(oldDirName: string, newDirName: string) {
+async function renameDirectory(oldDirName, newDirName) {
   // Rename the cloned directory
   try {
     await fs.rename(oldDirName, newDirName);
@@ -46,7 +39,7 @@ async function renameDirectory(oldDirName: string, newDirName: string) {
   }
 }
 
-async function deleteDirectory(directoryPath: string) {
+async function deleteDirectory(directoryPath) {
   try {
     await fs.rm(directoryPath, { recursive: true, force: true });
     return `Directory deleted at ${directoryPath}`;
@@ -56,7 +49,7 @@ async function deleteDirectory(directoryPath: string) {
   }
 }
 
-async function copyFile(sourceFilePath: string, destinationFilePath: string) {
+async function copyFile(sourceFilePath, destinationFilePath) {
   try {
     await fs.copyFile(sourceFilePath, destinationFilePath);
     return; // Add return statement
@@ -67,7 +60,7 @@ async function copyFile(sourceFilePath: string, destinationFilePath: string) {
 }
 
 // Function to get version of a command
-async function getVersion(command: string) {
+async function getVersion(command) {
   try {
     return execSync(`${command} --version`, { encoding: 'utf8' }).trim();
   } catch (error) {
@@ -76,13 +69,8 @@ async function getVersion(command: string) {
 }
 
 // Function to check version
-async function checkVersion(
-  command: string,
-  minVersion: string,
-  installCommand: string,
-  docLink: string
-) {
-  const spinner = ora(`Checking ${command} version...`) as Ora;
+async function checkVersion(command, minVersion, installCommand, docLink) {
+  const spinner = ora(`Checking ${command} version...`);
   spinner.start();
   let version = await getVersion(command);
 
@@ -104,7 +92,7 @@ async function checkVersion(
 }
 
 // Function for shell command
-async function shellCommand(command: string) {
+async function shellCommand(command) {
   try {
     const isError = shell.exec(command).code !== 0;
     if (isError) {
@@ -124,7 +112,7 @@ async function getUserInput() {
       name: 'projectName',
       message: 'Please enter project name:',
       default: 'my-app',
-      validate: function(value: string) {
+      validate: function(value) {
         if (value.length && !value.includes(' ')) {
           return true;
         } else {
@@ -189,11 +177,7 @@ async function checkVersions() {
 //     console.log('ERROR: ' + err);
 //   }
 // }
-async function replaceInFile(
-  filename: string,
-  searchValue: string,
-  replaceValue: string
-) {
+async function replaceInFile(filename, searchValue, replaceValue) {
   try {
     const data = await fs.readFile(filename, 'utf8');
     const updatedData = data.replace(searchValue, replaceValue);
@@ -203,12 +187,12 @@ async function replaceInFile(
   }
 }
 
-async function createAndCopy(projectName: string, temple: string) {
+async function createAndCopy(projectName, temple) {
   const spinner = ora(
     chalk.yellow(
       'It will take a few minutes to install the package do not close the terminal.\n\n'
     )
-  ) as Ora;
+  );
   spinner.start();
 
   if (!shell.test('-d', projectName)) {
@@ -250,7 +234,7 @@ async function createAndCopy(projectName: string, temple: string) {
   }
 }
 
-async function action({ projectName }: { projectName: string }) {
+async function action({ projectName }) {
   await checkVersions();
 
   const temple = 'nextjs_setup';

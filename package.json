@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1",
+  "version": "0.0.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -8,18 +8,6 @@
     "src"
   ],
   "type": "module",
-  "engines": {
-    "node": "^18.0.0 || >=20.0.0"
-  },
-  "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
-  },
   "peerDependencies": {},
   "husky": {
     "hooks": {
@@ -35,16 +23,6 @@
   "name": "@nazmul53p/quick-setup",
   "author": "nazmul53p",
   "module": "dist/qu.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/qu.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/qu.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "dependencies": {
     "chalk": "5.3.0",
     "dotenv": "^16.3.1",
@@ -66,5 +44,8 @@
     "tsdx": "^0.14.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
+  },
+  "bin": {
+    "quick-setup": "./src/index.js"
   }
 }
