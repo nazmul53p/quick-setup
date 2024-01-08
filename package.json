@@ -7,8 +7,9 @@
     "dist",
     "src"
   ],
+  "type": "module",
   "engines": {
-    "node": ">=19"
+    "node": "^18.0.0 || >=20.0.0"
   },
   "scripts": {
     "start": "tsdx watch",
