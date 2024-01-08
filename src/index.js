@@ -188,11 +188,7 @@ async function replaceInFile(filename, searchValue, replaceValue) {
 }
 
 async function createAndCopy(projectName, temple) {
-  const spinner = ora(
-    chalk.yellow(
-      'It will take a few minutes to install the package do not close the terminal.\n\n'
-    )
-  );
+  const spinner = ora(`Creating project ${projectName}...`);
   spinner.start();
 
   if (!shell.test('-d', projectName)) {
@@ -228,7 +224,27 @@ async function createAndCopy(projectName, temple) {
     await createAndWrite('deploy.sh', getDeployShFile(projectName));
     shellCommand("git add . && git commit -m 'Initial setup'");
 
-    spinner.succeed(`cd ${projectName} && yarn dev`);
+    spinner.succeed(`Project setup successfully`);
+    console.log(
+      chalk.white(` 
+    \n
+    ***************************************************
+    1. Go to project directory: cd ${projectName}
+    cd ${projectName}
+
+    2. Run project:
+    yarn dev
+    ***************************************************
+
+    ******************* For Docker ********************
+    docker-compose up -d
+    ***************** For Production ******************
+    1. Run deploy.sh file
+    sh deploy.sh
+    ****************** Happy Coding *******************
+    \n\n
+    `)
+    );
   } else {
     spinner.fail(`Project directory already exists`);
   }
