@@ -189,7 +189,7 @@ async function replaceInFile(filename, searchValue, replaceValue) {
 
 async function createAndCopy(projectName, temple) {
   const spinner = ora(
-    chalk.yellow(
+    chalk.red(
       'It will take a few minutes to install the package do not close the terminal.\n\n'
     )
   );
@@ -235,6 +235,22 @@ async function createAndCopy(projectName, temple) {
 }
 
 async function action({ projectName }) {
+  console.log(
+    chalk.green(
+      `
+   ======================================================================================================
+   ######   ######   ##            ##      ## #### ########  ######## ##       ########  ######   ######  
+   ##    ## ##    ## ##            ##  ##  ##  ##  ##     ## ##       ##       ##       ##    ## ##    ## 
+   ##       ##       ##            ##  ##  ##  ##  ##     ## ##       ##       ##       ##       ##       
+    ######   ######  ##            ##  ##  ##  ##  ########  ######   ##       ######    ######   ######  
+         ##       ## ##            ##  ##  ##  ##  ##   ##   ##       ##       ##             ##       ## 
+   ##    ## ##    ## ##            ##  ##  ##  ##  ##    ##  ##       ##       ##       ##    ## ##    ## 
+    ######   ######  ########       ###  ###  #### ##     ## ######## ######## ########  ######   ######
+    ======================================================================================================
+    \n\n
+   `
+    )
+  );
   await checkVersions();
 
   const temple = 'nextjs_setup';
