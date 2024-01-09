@@ -82,8 +82,9 @@ async function checkVersion(command, minVersion, installCommand, docLink) {
       spinner.succeed(`${command} version is OK (${version})`);
     } else {
       spinner.fail(
-        `${command} is not installed or version is too low (${version ||
-          'N/A'})`
+        `${command} is not installed or version is too low (${
+          version || 'N/A'
+        })`
       );
       console.log(`To install or update, run: ${installCommand}`);
       console.log(`For more information, see: ${docLink}`);
@@ -112,7 +113,7 @@ async function getUserInput() {
       name: 'projectName',
       message: 'Please enter project name:',
       default: 'my-app',
-      validate: function(value) {
+      validate: function (value) {
         if (value.length && !value.includes(' ')) {
           return true;
         } else {
@@ -254,9 +255,9 @@ async function action({ projectName }) {
   console.log(
     chalk.red(
       `
-    =========================================================================
-    Take few minutes to setup your project. Please do not close the terminal.
-    =========================================================================
+=========================================================================
+Take few minutes to setup your project. Please do not close the terminal.
+=========================================================================
      \n
     `
     )
@@ -266,20 +267,5 @@ async function action({ projectName }) {
   const temple = 'nextjs_setup';
   createAndCopy(projectName, temple);
 }
-console.log(
-  chalk.green(
-    `
-  ======================================================================================================
-  ######   ######   ##            ##      ## #### ########  ######## ##       ########  ######   ######  
-  ##    ## ##    ## ##            ##  ##  ##  ##  ##     ## ##       ##       ##       ##    ## ##    ## 
-  ##       ##       ##            ##  ##  ##  ##  ##     ## ##       ##       ##       ##       ##       
-   ######   ######  ##            ##  ##  ##  ##  ########  ######   ##       ######    ######   ######  
-        ##       ## ##            ##  ##  ##  ##  ##   ##   ##       ##       ##             ##       ## 
-  ##    ## ##    ## ##            ##  ##  ##  ##  ##    ##  ##       ##       ##       ##    ## ##    ## 
-   ######   ######  ########       ###  ###  #### ##     ## ######## ######## ########  ######   ######
-  ======================================================================================================
-   \n\n
-  `
-  )
-);
+
 getUserInput().then(action);
