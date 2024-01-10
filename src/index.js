@@ -244,13 +244,13 @@ async function setup(projectName, temple, type = '') {
   spinner.start();
 
   if (!shell.test('-d', projectName)) {
-    shell.exec('git clone https://github.com/nazmul53p/nextjs_setup.git');
+    shell.exec('git clone git@bitbucket.org:sslengineering/ssl-react.git');
     await renameDirectory(temple, projectName);
     shell.cd(projectName);
     await common(projectName, spinner);
   } else {
     if (type === '.') {
-      shell.exec('git clone https://github.com/nazmul53p/nextjs_setup.git');
+      shell.exec('git clone git@bitbucket.org:sslengineering/ssl-react.git');
       await fsExtra.copy(`${RootDir}/${temple}`, `${RootDir}`);
       await deleteDirectory(`${RootDir}/${temple}`);
       let getProjectName = RootDir.split('/');
@@ -275,7 +275,7 @@ Take few minutes to setup your project. Please do not close the terminal.
   );
   await checkVersions();
 
-  const temple = 'nextjs_setup';
+  const temple = 'ssl-react';
   if (projectName === '.') {
     setup(projectName, temple, '.');
   } else {
