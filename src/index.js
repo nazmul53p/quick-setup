@@ -82,9 +82,8 @@ async function checkVersion(command, minVersion, installCommand, docLink) {
       spinner.succeed(`${command} version is OK (${version})`);
     } else {
       spinner.fail(
-        `${command} is not installed or version is too low (${
-          version || 'N/A'
-        })`
+        `${command} is not installed or version is too low (${version ||
+          'N/A'})`
       );
       console.log(`To install or update, run: ${installCommand}`);
       console.log(`For more information, see: ${docLink}`);
@@ -113,7 +112,7 @@ async function getUserInput() {
       name: 'projectName',
       message: 'Please enter project name:',
       default: 'my-app',
-      validate: function (value) {
+      validate: function(value) {
         if (value.length && !value.includes(' ')) {
           return true;
         } else {
