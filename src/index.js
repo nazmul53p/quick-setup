@@ -6,8 +6,8 @@ import * as fs from 'node:fs/promises';
 
 import chalk from 'chalk';
 import dotenv from 'dotenv';
+import fsExtra from 'fs-extra';
 import ora from 'ora';
-import path from 'path';
 import semver from 'semver';
 import shell from 'shelljs';
 import {
@@ -18,7 +18,7 @@ import {
 } from './const.js';
 
 dotenv.config();
-
+const RootDir = process.cwd();
 // create file and write data to file
 async function createAndWrite(filename, data) {
   try {
@@ -188,46 +188,37 @@ async function replaceInFile(filename, searchValue, replaceValue) {
   }
 }
 
-async function createAndCopy(projectName, temple) {
-  const spinner = ora(`Creating project ${projectName}...`);
-  spinner.start();
+async function common(projectName, spinner) {
+  await deleteDirectory(`.git`);
 
-  if (!shell.test('-d', projectName)) {
-    const RootDir = process.cwd();
-    shell.exec('git clone https://github.com/nazmul53p/nextjs_setup.git');
-    if (projectName === '.') {
-      projectName = path.basename(RootDir);
-      await copyFile(temple, projectName);
-    } else {
-      await renameDirectory(temple, projectName);
-    }
+  shellCommand(`npm pkg set name=${projectName}`);
 
-    shell.cd(projectName);
-    await deleteDirectory(`.git`);
+  shellCommand('git init && npx husky-init && yarn install');
 
-    shellCommand(`npm pkg set name=${projectName}`);
+  await replaceInFile('./.husky/pre-commit', 'npm test', 'npx lint-staged');
 
-    shellCommand('git init && npx husky-init && yarn install');
-    await replaceInFile('./.husky/pre-commit', 'npm test', 'npx lint-staged');
-    shellCommand(`npm pkg delete scripts.prepare`);
-    await createAndWrite(
-      'Dockerfile',
-      getDockerFile(String(await getVersion('node')).replace('v', ''))
-    );
-    await createAndWrite(
-      'docker-compose.yml',
-      getDockerComposeFile(projectName)
-    );
-    await createAndWrite(
-      'ecosystem.config.js',
-      getEcosystemConfigJsFile(projectName)
-    );
-    await createAndWrite('deploy.sh', getDeployShFile(projectName));
-    shellCommand("git add . && git commit -m 'Initial setup'");
+  shellCommand(`npm pkg delete scripts.prepare`);
 
-    spinner.succeed(`Project setup successfully`);
-    console.log(
-      chalk.white(` 
+  await createAndWrite(
+    'Dockerfile',
+    getDockerFile(String(await getVersion('node')).replace('v', ''))
+  );
+
+  await createAndWrite('docker-compose.yml', getDockerComposeFile(projectName));
+
+  await createAndWrite(
+    'ecosystem.config.js',
+    getEcosystemConfigJsFile(projectName)
+  );
+
+  await createAndWrite('deploy.sh', getDeployShFile(projectName));
+
+  shellCommand("git add . && git commit -m 'Initial setup'");
+
+  spinner.succeed(`Project setup successfully`);
+
+  console.log(
+    chalk.white(` 
     \n
     ***************************************************
     1. Go to project directory: cd ${projectName}
@@ -245,9 +236,29 @@ async function createAndCopy(projectName, temple) {
     ****************** Happy Coding *******************
     \n\n
     `)
-    );
+  );
+}
+
+async function setup(projectName, temple, type = '') {
+  const spinner = ora(`Creating project ${projectName}...`);
+  spinner.start();
+
+  if (!shell.test('-d', projectName)) {
+    shell.exec('git clone https://github.com/nazmul53p/nextjs_setup.git');
+    await renameDirectory(temple, projectName);
+    shell.cd(projectName);
+    await common(projectName, spinner);
   } else {
-    spinner.fail(`Project directory already exists`);
+    if (type === '.') {
+      shell.exec('git clone https://github.com/nazmul53p/nextjs_setup.git');
+      await fsExtra.copy(`${RootDir}/${temple}`, `${RootDir}`);
+      await deleteDirectory(`${RootDir}/${temple}`);
+      let getProjectName = RootDir.split('/');
+      getProjectName = getProjectName[getProjectName.length - 1];
+      await common(getProjectName, spinner);
+    } else {
+      spinner.fail(`Project directory already exists`);
+    }
   }
 }
 
@@ -265,7 +276,11 @@ Take few minutes to setup your project. Please do not close the terminal.
   await checkVersions();
 
   const temple = 'nextjs_setup';
-  createAndCopy(projectName, temple);
+  if (projectName === '.') {
+    setup(projectName, temple, '.');
+  } else {
+    setup(projectName, temple);
+  }
 }
 
 getUserInput().then(action);
