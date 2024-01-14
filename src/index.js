@@ -8,6 +8,7 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 import fsExtra from 'fs-extra';
 import ora from 'ora';
+import path from 'path';
 import semver from 'semver';
 import shell from 'shelljs';
 import {
@@ -19,6 +20,11 @@ import {
 
 dotenv.config();
 const RootDir = process.cwd();
+
+// get folder name
+function getProjectName() {
+  return path.basename(path.dirname(__filename));
+}
 // create file and write data to file
 async function createAndWrite(filename, data) {
   try {
@@ -212,7 +218,7 @@ async function common(projectName, spinner) {
 
   await createAndWrite('deploy.sh', getDeployShFile(projectName));
 
-  shellCommand("git add . && git commit -m 'Initial setup'");
+  shellCommand(`git add . && git commit -m "Initial setup"`);
 
   spinner.succeed(`Project setup successfully`);
 
@@ -257,7 +263,12 @@ async function setup(projectName, temple, type = '') {
       shell.exec('git clone git@bitbucket.org:sslengineering/ssl-react.git');
       await fsExtra.copy(`${RootDir}/${temple}`, `${RootDir}`);
       await deleteDirectory(`${RootDir}/${temple}`);
-      let getProjectName = RootDir.split('/');
+      let getProjectName = '';
+      if (RootDir.includes('/')) {
+        getProjectName = RootDir.split('/');
+      } else {
+        getProjectName = RootDir.split('\\');
+      }
       getProjectName = getProjectName[getProjectName.length - 1];
       await common(getProjectName, spinner);
     } else {
