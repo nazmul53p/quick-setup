@@ -217,7 +217,7 @@ async function common(projectName, spinner) {
   spinner.succeed(`Project setup successfully`);
 
   console.log(
-    chalk.white(` 
+    chalk.green(` 
     \n
     ***************************************************
     1. Go to project directory: cd ${projectName}
