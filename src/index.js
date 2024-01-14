@@ -225,13 +225,18 @@ async function common(projectName, spinner) {
 
     2. Run project:
     yarn dev
-    ***************************************************
 
-    ******************* For Docker ********************
+    ************ For Develop with Docker **************
+    1. Run docker-compose up
     docker-compose up -d
+
+    2. Run project:
+    docker exec ${projectName} yarn dev
+
     ***************** For Production ******************
     1. Run deploy.sh file
     sh deploy.sh
+
     ****************** Happy Coding *******************
     \n\n
     `)
