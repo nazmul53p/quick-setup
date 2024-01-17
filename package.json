@@ -1,5 +1,5 @@
 {
-  "version": "0.0.35",
+  "version": "0.0.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -21,8 +21,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@nazmul53p/quick-setup",
-  "author": "nazmul53p",
+  "name": "quick-nextjs-setup",
   "module": "dist/qu.esm.js",
   "dependencies": {
     "chalk": "5.3.0",
@@ -47,6 +46,6 @@
     "typescript": "^5.3.3"
   },
   "bin": {
-    "quick-setup": "./src/index.js"
+    "quick-nextjs-setup": "./src/index.js"
   }
 }

@@ -32,7 +32,7 @@ Technologies used: <br/>
 At first install the framework directly from NPM Package Manager
 
 ```
-npx @nazmul53p/quick-setup
+npx quick-nextjs-setup
 ```
 
 When prompted write your project name and port to display the application
