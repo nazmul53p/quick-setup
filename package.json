@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -21,7 +21,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "quick-nextjs-setup",
+  "name": "qreact-project-starter-ssl",
   "module": "dist/qu.esm.js",
   "dependencies": {
     "chalk": "5.3.0",
@@ -46,6 +46,6 @@
     "typescript": "^5.3.3"
   },
   "bin": {
-    "quick-nextjs-setup": "./src/index.js"
+    "react-project-starter-ssl": "./src/index.js"
   }
 }
